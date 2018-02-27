@@ -5,7 +5,7 @@ import java.util.List;
 public class Response {
 	
 	private String breed;
-	private String[] subBreeds;
+	private List<String> subBreeds;
 	private List<Image> images;
 	
 	public String getBreed() {
@@ -14,10 +14,10 @@ public class Response {
 	public void setBreed(String breed) {
 		this.breed = breed;
 	}
-	public String[] getSubBreeds() {
+	public List<String> getSubBreeds() {
 		return subBreeds;
 	}
-	public void setSubBreeds(String[] subBreeds) {
+	public void setSubBreeds(List<String> subBreeds) {
 		this.subBreeds = subBreeds;
 	}
 	public List<Image> getImages() {

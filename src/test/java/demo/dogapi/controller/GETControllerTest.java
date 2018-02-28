@@ -22,6 +22,7 @@ import demo.dogapi.domain.Response;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.service.IRestService;
 
+
 public class GETControllerTest extends ControllerTestBase {
 
 	private String endpoint = "/v1/";
@@ -82,4 +83,5 @@ public class GETControllerTest extends ControllerTestBase {
 			throw new TestingException(e.getMessage(), e);
 		}
 	}
+	
 }

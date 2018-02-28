@@ -11,16 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.dogapi.domain.Response;
+import demo.dogapi.domain.ResponseError;
 import demo.dogapi.service.IRestService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/v1/{breed}")
+@RequestMapping("/v1/breed/{breed}")
 public class GETController {
 	
 	@Autowired
 	private IRestService service;
 
 	@RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(httpMethod = "GET", value = "get")
+	@ApiResponses(value = {
+			@ApiResponse(code = 404, message = "Not Found", 				response = ResponseError.class),
+			@ApiResponse(code = 500, message = "Internal Server Error", 	response = ResponseError.class)
+			}
+	)
 	public ResponseEntity<Response> get(@PathVariable String breed) {
 		return new ResponseEntity<Response>(this.service.getDataByBreed(breed), HttpStatus.OK);	
 	}

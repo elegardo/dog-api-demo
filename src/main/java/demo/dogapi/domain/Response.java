@@ -2,6 +2,9 @@ package demo.dogapi.domain;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("Response")
 public class Response {
 	
 	private String breed;

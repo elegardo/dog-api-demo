@@ -1,5 +1,8 @@
 package demo.dogapi.domain;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("Image")
 public class ResponseImage {
 
 	private String url;

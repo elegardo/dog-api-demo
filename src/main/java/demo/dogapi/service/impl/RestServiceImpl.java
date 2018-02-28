@@ -27,7 +27,7 @@ public class RestServiceImpl implements IRestService {
 
     public RestServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
-        setTimeout(restTemplate, this.apiTimeout);
+        setTimeout(restTemplate);
     }
     
     @Override
@@ -65,11 +65,11 @@ public class RestServiceImpl implements IRestService {
         return images;    	
     }
     
-    private void setTimeout(RestTemplate restTemplate, int timeout) {
+    private void setTimeout(RestTemplate restTemplate) {
         restTemplate.setRequestFactory(new SimpleClientHttpRequestFactory());
         SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(timeout);
-        rf.setConnectTimeout(timeout);
+        rf.setReadTimeout(this.apiTimeout);
+        rf.setConnectTimeout(this.apiTimeout);
     }
 
 }

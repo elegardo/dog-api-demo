@@ -12,7 +12,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import demo.dogapi.domain.APIResult;
-import demo.dogapi.domain.Image;
+import demo.dogapi.domain.ResponseImage;
 import demo.dogapi.domain.Response;
 import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.IRestService;
@@ -53,13 +53,13 @@ public class RestServiceImpl implements IRestService {
 		return breedListResult.getMessage();    	
     }
     
-    private List<Image> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
+    private List<ResponseImage> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
 		String breedImagesURL = String.format("https://dog.ceo/api/breed/%s/images", breed);
 		APIResult breedImagesResult = restTemplate.getForObject(breedImagesURL, APIResult.class);
 		
-        List<Image> images = new ArrayList<Image>();
+        List<ResponseImage> images = new ArrayList<ResponseImage>();
         for(String i:breedImagesResult.getMessage()) {
-        		images.add(new Image(i));
+        		images.add(new ResponseImage(i));
         }
         
         return images;    	

@@ -1,10 +1,10 @@
 package demo.dogapi.domain;
 
-public class Image {
+public class ResponseImage {
 
 	private String url;
 	
-	public Image(String url) {
+	public ResponseImage(String url) {
 		this.url = url;
 	}
 

@@ -6,7 +6,7 @@ public class Response {
 	
 	private String breed;
 	private List<String> subBreeds;
-	private List<Image> images;
+	private List<ResponseImage> images;
 	
 	public String getBreed() {
 		return breed;
@@ -20,10 +20,10 @@ public class Response {
 	public void setSubBreeds(List<String> subBreeds) {
 		this.subBreeds = subBreeds;
 	}
-	public List<Image> getImages() {
+	public List<ResponseImage> getImages() {
 		return images;
 	}
-	public void setImages(List<Image> images) {
+	public void setImages(List<ResponseImage> images) {
 		this.images = images;
 	}
 

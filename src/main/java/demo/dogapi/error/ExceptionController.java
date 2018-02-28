@@ -17,4 +17,9 @@ public class ExceptionController {
 		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler(NotFoundException.class)
+	@ResponseBody
+	public ResponseEntity<ResponseError> handleException(NotFoundException e) {
+		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
+	}
 }

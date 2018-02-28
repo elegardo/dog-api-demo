@@ -1,19 +1,30 @@
 package demo.dogapi.service.impl;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import demo.dogapi.domain.APIResult;
-import demo.dogapi.domain.ResponseImage;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import demo.dogapi.domain.APIError;
+import demo.dogapi.domain.APISuccess;
 import demo.dogapi.domain.Response;
+import demo.dogapi.domain.ResponseImage;
+import demo.dogapi.error.NotFoundException;
 import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.IRestService;
 
@@ -41,24 +52,47 @@ public class RestServiceImpl implements IRestService {
 			response.setImages(getImagesByBreed(breed));
 		} catch (ConnectException | ResourceAccessException e) {
 			throw new ServiceException("No se pudo conectar a la API de Dog API");
+		} catch (IOException e) {
+			throw new ServiceException("Error: No es posible obtener la informacion solicitada desde la API de Dog API");
 		}
         
 		return response;
 	}
     
-    private List<String> getSubBreedByBreed(String breed) throws ConnectException, ResourceAccessException {
+    private List<String> getSubBreedByBreed(String breed) throws ResourceAccessException, JsonParseException, JsonMappingException, IOException {
+    	    	
+    		APISuccess breedResult;
+    		ObjectMapper objectMapper = new ObjectMapper();
 		String breedListURL = String.format("https://dog.ceo/api/breed/%s/list", breed);
-		APIResult breedListResult = restTemplate.getForObject(breedListURL, APIResult.class);
 		
-		return breedListResult.getMessage();    	
+    		HttpEntity<Void> requestEntity = new HttpEntity<Void>(new HttpHeaders());
+    		ResponseEntity<String> uri = restTemplate.exchange(breedListURL, HttpMethod.GET, requestEntity, String.class);
+    		
+    		if(uri.getStatusCode().value()==200 && uri.getBody().contains("success")) {
+    			breedResult = objectMapper.readValue(uri.getBody(), APISuccess.class);
+    		}
+    		else if(uri.getStatusCode().value()==200 && uri.getBody().contains("error")) {
+    			APIError error = objectMapper.readValue(uri.getBody(), APIError.class);
+    			if("404".equals(error.getCode())) {
+        			throw new NotFoundException("La raza solicitada no fue encontrada en la API de Dog API");    				
+    			}
+        		else {
+        			throw new ServiceException("Error: La API de Dog API entrega el siguiente status:"+uri.getStatusCode());
+        		}
+    		}
+    		else {
+    			throw new ServiceException("Error: La API de Dog API entrega el siguiente status:"+uri.getStatusCode());
+    		}
+    		
+		return breedResult.getMessage();    	
     }
     
     private List<ResponseImage> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
 		String breedImagesURL = String.format("https://dog.ceo/api/breed/%s/images", breed);
-		APIResult breedImagesResult = restTemplate.getForObject(breedImagesURL, APIResult.class);
+		APISuccess breedResult = restTemplate.getForObject(breedImagesURL, APISuccess.class);
 		
         List<ResponseImage> images = new ArrayList<ResponseImage>();
-        for(String i:breedImagesResult.getMessage()) {
+        for(String i:breedResult.getMessage()) {
         		images.add(new ResponseImage(i));
         }
         

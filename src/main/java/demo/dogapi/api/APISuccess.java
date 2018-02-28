@@ -13,6 +13,7 @@ public class APISuccess extends APIResult {
 	public List<String> getMessage() {
 		return message;
 	}
+	
 	public void setMessage(List<String> message) {
 		this.message = message;
 	}

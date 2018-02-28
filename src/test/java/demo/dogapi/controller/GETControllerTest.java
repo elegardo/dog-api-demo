@@ -22,7 +22,6 @@ import demo.dogapi.domain.Breed;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.service.IRestService;
 
-
 public class GETControllerTest extends MockTestBase {
 
 	private String endpoint = "/v1/breed/";

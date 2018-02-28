@@ -1,10 +1,10 @@
 package demo.dogapi.service.impl;
 
 import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,14 @@ import demo.dogapi.service.IRestService;
 @Service
 public class RestServiceImpl implements IRestService {
 	
+	@Value("${api.timeout}")
+	private int apiTimeout;
+	
 	private final RestTemplate restTemplate;
 
     public RestServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
-        setTimeout(restTemplate, 10000);
+        setTimeout(restTemplate, this.apiTimeout);
     }
     
     @Override
@@ -34,22 +37,23 @@ public class RestServiceImpl implements IRestService {
         response.setBreed(breed);
         
         try {
-			response.setSubBreeds(getSubBreedList(breed));
-			response.setImages(getImagesList(breed));
+			response.setSubBreeds(getSubBreedByBreed(breed));
+			response.setImages(getImagesByBreed(breed));
 		} catch (ConnectException | ResourceAccessException e) {
-			throw new ServiceException("No se pudo conectar a la API");
+			throw new ServiceException("No se pudo conectar a la API de Dog API");
 		}
         
 		return response;
 	}
     
-    private List<String> getSubBreedList(String breed) throws ConnectException, ResourceAccessException {
+    private List<String> getSubBreedByBreed(String breed) throws ConnectException, ResourceAccessException {
 		String breedListURL = String.format("https://dog.ceo/api/breed/%s/list", breed);
 		APIResult breedListResult = restTemplate.getForObject(breedListURL, APIResult.class);
+		
 		return breedListResult.getMessage();    	
     }
     
-    private List<Image> getImagesList(String breed) throws ConnectException, ResourceAccessException {
+    private List<Image> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
 		String breedImagesURL = String.format("https://dog.ceo/api/breed/%s/images", breed);
 		APIResult breedImagesResult = restTemplate.getForObject(breedImagesURL, APIResult.class);
 		

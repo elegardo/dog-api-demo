@@ -4,12 +4,12 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel("Response")
-public class Response {
+@ApiModel("Breed")
+public class Breed {
 	
 	private String breed;
 	private List<String> subBreeds;
-	private List<ResponseImage> images;
+	private List<BreedImage> images;
 	
 	public String getBreed() {
 		return breed;
@@ -23,10 +23,10 @@ public class Response {
 	public void setSubBreeds(List<String> subBreeds) {
 		this.subBreeds = subBreeds;
 	}
-	public List<ResponseImage> getImages() {
+	public List<BreedImage> getImages() {
 		return images;
 	}
-	public void setImages(List<ResponseImage> images) {
+	public void setImages(List<BreedImage> images) {
 		this.images = images;
 	}
 

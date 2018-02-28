@@ -1,9 +1,9 @@
 package demo.dogapi.service;
 
-import demo.dogapi.domain.Response;
+import demo.dogapi.domain.Breed;
 
 public interface IRestService {
 	
-	public Response getDataByBreed(String breed);
+	public Breed getDataByBreed(String breed);
 	
 }

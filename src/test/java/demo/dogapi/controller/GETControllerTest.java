@@ -18,14 +18,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import demo.dogapi.ControllerTestBase;
 import demo.dogapi.TestingException;
-import demo.dogapi.domain.Response;
+import demo.dogapi.domain.Breed;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.service.IRestService;
 
 
 public class GETControllerTest extends ControllerTestBase {
 
-	private String endpoint = "/v1/";
+	private String endpoint = "/v1/breed/";
 
 	@InjectMocks
 	private GETController restController = new GETController();
@@ -44,7 +44,7 @@ public class GETControllerTest extends ControllerTestBase {
 		try {
 			String breed = "chiguagua";
 
-			when(service.getDataByBreed(any(String.class))).thenReturn(new Response());
+			when(service.getDataByBreed(any(String.class))).thenReturn(new Breed());
 
 			MockHttpServletResponse responseRestService;
 			responseRestService = mockMvc

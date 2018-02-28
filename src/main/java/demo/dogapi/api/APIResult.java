@@ -1,4 +1,4 @@
-package demo.dogapi.domain;
+package demo.dogapi.api;
 
 public class APIResult {
 

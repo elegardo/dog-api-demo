@@ -1,4 +1,4 @@
-package demo.dogapi.domain;
+package demo.dogapi.error;
 
 public class ResponseError {
 	

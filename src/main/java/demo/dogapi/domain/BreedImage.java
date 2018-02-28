@@ -3,11 +3,11 @@ package demo.dogapi.domain;
 import io.swagger.annotations.ApiModel;
 
 @ApiModel("Image")
-public class ResponseImage {
+public class BreedImage {
 
 	private String url;
 	
-	public ResponseImage(String url) {
+	public BreedImage(String url) {
 		this.url = url;
 	}
 

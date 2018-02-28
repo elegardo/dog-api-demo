@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import demo.dogapi.domain.Response;
-import demo.dogapi.domain.ResponseError;
+import demo.dogapi.domain.Breed;
+import demo.dogapi.error.ResponseError;
 import demo.dogapi.service.IRestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,8 +31,8 @@ public class GETController {
 			@ApiResponse(code = 500, message = "Internal Server Error", 	response = ResponseError.class)
 			}
 	)
-	public ResponseEntity<Response> get(@PathVariable String breed) {
-		return new ResponseEntity<Response>(this.service.getDataByBreed(breed), HttpStatus.OK);	
+	public ResponseEntity<Breed> get(@PathVariable String breed) {
+		return new ResponseEntity<Breed>(this.service.getDataByBreed(breed), HttpStatus.OK);	
 	}
 	
 }

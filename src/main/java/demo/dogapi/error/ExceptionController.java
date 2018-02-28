@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import demo.dogapi.domain.ResponseError;
-
 @ControllerAdvice
 public class ExceptionController {
 	

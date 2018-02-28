@@ -20,10 +20,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import demo.dogapi.domain.APIError;
-import demo.dogapi.domain.APISuccess;
-import demo.dogapi.domain.Response;
-import demo.dogapi.domain.ResponseImage;
+import demo.dogapi.api.APIError;
+import demo.dogapi.api.APISuccess;
+import demo.dogapi.domain.Breed;
+import demo.dogapi.domain.BreedImage;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.IRestService;
@@ -42,9 +42,9 @@ public class RestServiceImpl implements IRestService {
     }
     
     @Override
-	public Response getDataByBreed(String breed) {
+	public Breed getDataByBreed(String breed) {
 		
-        Response response = new Response();
+        Breed response = new Breed();
         response.setBreed(breed);
         
         try {
@@ -87,13 +87,13 @@ public class RestServiceImpl implements IRestService {
 		return breedResult.getMessage();    	
     }
     
-    private List<ResponseImage> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
+    private List<BreedImage> getImagesByBreed(String breed) throws ConnectException, ResourceAccessException {
 		String breedImagesURL = String.format("https://dog.ceo/api/breed/%s/images", breed);
 		APISuccess breedResult = restTemplate.getForObject(breedImagesURL, APISuccess.class);
 		
-        List<ResponseImage> images = new ArrayList<ResponseImage>();
+        List<BreedImage> images = new ArrayList<BreedImage>();
         for(String i:breedResult.getMessage()) {
-        		images.add(new ResponseImage(i));
+        		images.add(new BreedImage(i));
         }
         
         return images;    	

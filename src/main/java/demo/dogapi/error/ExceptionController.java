@@ -22,4 +22,5 @@ public class ExceptionController {
 	public ResponseEntity<ResponseError> handleException(NotFoundException e) {
 		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
 	}
+	
 }

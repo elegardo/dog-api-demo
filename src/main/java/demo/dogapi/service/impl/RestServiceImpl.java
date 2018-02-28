@@ -68,7 +68,7 @@ public class RestServiceImpl implements IRestService {
         			throw new NotFoundException("La raza solicitada no fue encontrada en la API de Dog API");    				
     			}
         		else {
-        			throw new ServiceException("Error: La API de Dog API entrega el siguiente status:"+uri.getStatusCode());
+        			throw new ServiceException("Error: La API de Dog API entrega status:"+uri.getStatusCode() + ", y el mensaje:"+ error.getMessage());
         		}
     		}
     		else {

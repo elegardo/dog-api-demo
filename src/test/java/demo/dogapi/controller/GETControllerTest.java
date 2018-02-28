@@ -3,6 +3,7 @@ package demo.dogapi.controller;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -16,10 +17,14 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import demo.dogapi.MockTestBase;
 import demo.dogapi.TestingException;
 import demo.dogapi.domain.Breed;
 import demo.dogapi.error.NotFoundException;
+import demo.dogapi.error.ResponseError;
+import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.IRestService;
 
 public class GETControllerTest extends MockTestBase {
@@ -83,4 +88,32 @@ public class GETControllerTest extends MockTestBase {
 		}
 	}
 	
+	@Test
+	public void getTest_status_500() throws TestingException {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String breed = "quiltro";
+			ResponseError myError = new ResponseError(500, "internal error");
+
+			when(service.getDataByBreed(any(String.class))).thenThrow(new ServiceException("internal error"));
+
+			MockHttpServletResponse responseRestService;
+			responseRestService = mockMvc
+					.perform(
+							get(endpoint + breed)
+							.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+					.andReturn()
+					.getResponse();
+			
+			ResponseError responseError = objectMapper.readValue(responseRestService.getContentAsString(), ResponseError.class);
+
+			assertEquals(INTERNAL_SERVER_ERROR.value(), responseRestService.getStatus());
+			assertEquals(myError.getStatus(), responseError.getStatus());
+			assertEquals(myError.getMessage(), responseError.getMessage());
+
+		} catch (Exception e) {
+			throw new TestingException(e.getMessage(), e);
+		}
+	}
+		
 }

@@ -7,6 +7,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import demo.dogapi.error.ExceptionController;
+
 @RunWith(MockitoJUnitRunner.class)
 @Ignore
 public class MockTestBase {
@@ -16,7 +18,9 @@ public class MockTestBase {
 
     @Before
     public void setUp() throws TestingException {
-        mockMvc = MockMvcBuilders.standaloneSetup(getMockList()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(getMockList())
+        							.setControllerAdvice(new ExceptionController())
+        							.build();
     }
 
     protected Object[] getMockList() {

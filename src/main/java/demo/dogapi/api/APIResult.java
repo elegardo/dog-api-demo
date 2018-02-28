@@ -2,7 +2,7 @@ package demo.dogapi.api;
 
 public class APIResult {
 
-	private String status;
+	private final String status;
 	
 	public APIResult(String status) {
 		this.status = status;
@@ -10,10 +10,6 @@ public class APIResult {
 	
 	public String getStatus() {
 		return status;
-	}
-	
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	
 }

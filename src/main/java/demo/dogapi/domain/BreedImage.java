@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 @ApiModel("Image")
 public class BreedImage {
 
-	private String url;
+	final private String url;
 	
 	public BreedImage(String url) {
 		this.url = url;
@@ -15,8 +15,4 @@ public class BreedImage {
 		return url;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	
 }

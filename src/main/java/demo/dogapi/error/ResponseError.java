@@ -5,6 +5,8 @@ public class ResponseError {
 	private int status;
 	private String message;
 	
+	public ResponseError() {}
+	
 	public ResponseError(int status, String message) {
 		this.status = status;
 		this.message = message;

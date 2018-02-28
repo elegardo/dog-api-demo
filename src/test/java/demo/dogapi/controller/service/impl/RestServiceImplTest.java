@@ -1,6 +1,7 @@
 package demo.dogapi.controller.service.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -26,9 +27,10 @@ import demo.dogapi.domain.BreedImage;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.impl.RestServiceImpl;
-import static org.mockito.Mockito.when;
 
 public class RestServiceImplTest extends MockTestBase {
+	
+	private final String endpoint = "https://dog.ceo/api/breed/";
 	
 	@InjectMocks
 	private RestServiceImpl restService = new RestServiceImpl();
@@ -54,7 +56,6 @@ public class RestServiceImplTest extends MockTestBase {
 			mockUriBreed(breedName);
 		    
 		    APISuccess sucessTest = new APISuccess();
-		    sucessTest.setStatus("success");
 		    sucessTest.setMessage(new ArrayList<String>());
 		    
 		    mockUriBreedImages(breedName, sucessTest);
@@ -62,6 +63,7 @@ public class RestServiceImplTest extends MockTestBase {
 	        Breed returnBreed = restService.getDataByBreed(breedName);
 	        
 	        assertEquals(myBreed.getBreed(), returnBreed.getBreed());
+	        assertEquals(sucessTest.getStatus(), "success");
 
 		} catch (Exception e) {
 			throw new TestingException(e.getMessage(), e);
@@ -75,16 +77,16 @@ public class RestServiceImplTest extends MockTestBase {
 			String breedName = "pitbull";
 			
 			Breed myBreed = new Breed();
+			BreedImage myImage = new BreedImage("https://");
 			myBreed.setBreed(breedName);
 			myBreed.setImages(new ArrayList<BreedImage>());
-			myBreed.getImages().add(new BreedImage("https://image1.jpg"));
-			myBreed.getImages().add(new BreedImage("https://image2.jpg"));
-			myBreed.getImages().add(new BreedImage("https://image3.jpg"));
+			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image1.jpg"));
+			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image2.jpg"));
+			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image3.jpg"));
 			
 			mockUriBreed(breedName);
 		    
 		    APISuccess sucessTest = new APISuccess();
-		    sucessTest.setStatus("success");
 		    sucessTest.setMessage(new ArrayList<String>());
 		    sucessTest.getMessage().add("https://image1.jpg");
 		    sucessTest.getMessage().add("https://image2.jpg");
@@ -165,7 +167,7 @@ public class RestServiceImplTest extends MockTestBase {
 	private void mockUriBreed(String breedName) {
 		ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"success\",\"message\":[]}", HttpStatus.OK);
 	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(endpoint+breedName+"/list"),
 	    		Matchers.eq(HttpMethod.GET),
 	    		Matchers.<HttpEntity<Void>>any(),
 	    		Matchers.<Class<String>>any())
@@ -175,7 +177,7 @@ public class RestServiceImplTest extends MockTestBase {
 	private void mockUriBreedErrorByCode(String breedName, String code, HttpStatus status) {
 		ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"error\",\"code\":\""+code+"\",\"message\":\"Error text\"}", status);
 	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(endpoint+breedName+"/list"),
 	    		Matchers.eq(HttpMethod.GET),
 	    		Matchers.<HttpEntity<Void>>any(),
 	    		Matchers.<Class<String>>any())
@@ -185,7 +187,7 @@ public class RestServiceImplTest extends MockTestBase {
 	@SuppressWarnings("unchecked")
 	private void mockUriBreedErrorTimeout(String breedName) {
 	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(endpoint+breedName+"/list"),
 	    		Matchers.eq(HttpMethod.GET),
 	    		Matchers.<HttpEntity<Void>>any(),
 	    		Matchers.<Class<String>>any())
@@ -195,7 +197,7 @@ public class RestServiceImplTest extends MockTestBase {
 	@SuppressWarnings("unchecked")
 	private void mockUriBreedErrorConnection(String breedName) {
 	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(endpoint+breedName+"/list"),
 	    		Matchers.eq(HttpMethod.GET),
 	    		Matchers.<HttpEntity<Void>>any(),
 	    		Matchers.<Class<String>>any())
@@ -204,7 +206,7 @@ public class RestServiceImplTest extends MockTestBase {
 	
 	private void mockUriBreedImages(String breedName, APISuccess sucessTest) {
 	    Mockito.when(restTemplate.getForObject(
-	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/images"),
+	    		Matchers.eq(endpoint+breedName+"/images"),
 	    		Matchers.<Class<APISuccess>>any())
 	    	).thenReturn(sucessTest);		
 	}

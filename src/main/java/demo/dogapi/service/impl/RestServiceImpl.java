@@ -51,9 +51,9 @@ public class RestServiceImpl implements IRestService {
 	}
     
     private List<String> getSubBreedByBreed(String breed) throws ResourceAccessException, JsonParseException, JsonMappingException, IOException {
-    	    	
-    		APISuccess breedResult;
-    		ObjectMapper objectMapper = new ObjectMapper();
+    	
+		APISuccess breedResult;
+		ObjectMapper objectMapper = new ObjectMapper();
 		String breedListURL = String.format("https://dog.ceo/api/breed/%s/list", breed);
 		
     		HttpEntity<Void> requestEntity = new HttpEntity<Void>(new HttpHeaders());

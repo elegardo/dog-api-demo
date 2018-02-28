@@ -2,6 +2,7 @@ package demo.dogapi.controller.service.impl;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import demo.dogapi.TestingException;
 import demo.dogapi.api.APISuccess;
 import demo.dogapi.domain.Breed;
 import demo.dogapi.domain.BreedImage;
+import demo.dogapi.error.NotFoundException;
 import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.impl.RestServiceImpl;
 import static org.mockito.Mockito.when;
@@ -103,12 +105,59 @@ public class RestServiceImplTest extends MockTestBase {
 	@Test(expected=ServiceException.class)
 	public void getTest_service_errorTimeout() {
 
-			String breedName = "pitbull";
-			
+			String breedName = "pitbull";			
 			Breed myBreed = new Breed();
 			myBreed.setBreed(breedName);
 			
-			mockUriBreedTimeout(breedName);
+			mockUriBreedErrorTimeout(breedName);
+		    
+			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
+	}
+	
+	@Test(expected=NotFoundException.class)
+	public void getTest_service_error404() {
+
+			String breedName = "quiltro";
+			Breed myBreed = new Breed();
+			myBreed.setBreed(breedName);
+			
+			mockUriBreedErrorByCode(breedName, "404", HttpStatus.OK);
+		    
+			when(restService.getDataByBreed(breedName)).thenThrow(new NotFoundException("no esta"));
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void getTest_service_errorGeneric() {
+
+			String breedName = "quiltro";
+			Breed myBreed = new Breed();
+			myBreed.setBreed(breedName);
+			
+			mockUriBreedErrorByCode(breedName, "500", HttpStatus.OK);
+		    
+			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
+	}
+	
+	@Test(expected=ServiceException.class)
+	public void getTest_service_errorDefault() {
+
+			String breedName = "quiltro";
+			Breed myBreed = new Breed();
+			myBreed.setBreed(breedName);
+			
+			mockUriBreedErrorByCode(breedName, "0", HttpStatus.INTERNAL_SERVER_ERROR);
+		    
+			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
+	}	
+
+	@Test(expected=ServiceException.class)
+	public void getTest_service_errorConnection() {
+
+			String breedName = "pitbull";			
+			Breed myBreed = new Breed();
+			myBreed.setBreed(breedName);
+			
+			mockUriBreedErrorConnection(breedName);
 		    
 			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
 	}
@@ -123,14 +172,34 @@ public class RestServiceImplTest extends MockTestBase {
 	    	).thenReturn(uriBreedTest);		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void mockUriBreedTimeout(String breedName) {
+	private void mockUriBreedErrorByCode(String breedName, String code, HttpStatus status) {
+		ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"error\",\"code\":\""+code+"\",\"message\":\"Error text\"}", status);
 	    Mockito.when(restTemplate.exchange(
 	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
 	    		Matchers.eq(HttpMethod.GET),
 	    		Matchers.<HttpEntity<Void>>any(),
 	    		Matchers.<Class<String>>any())
-	    	).thenThrow(ConnectException.class);		
+	    	).thenReturn(uriBreedTest);		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void mockUriBreedErrorTimeout(String breedName) {
+	    Mockito.when(restTemplate.exchange(
+	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(HttpMethod.GET),
+	    		Matchers.<HttpEntity<Void>>any(),
+	    		Matchers.<Class<String>>any())
+	    	).thenThrow(ConnectException.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void mockUriBreedErrorConnection(String breedName) {
+	    Mockito.when(restTemplate.exchange(
+	    		Matchers.eq("https://dog.ceo/api/breed/"+breedName+"/list"),
+	    		Matchers.eq(HttpMethod.GET),
+	    		Matchers.<HttpEntity<Void>>any(),
+	    		Matchers.<Class<String>>any())
+	    	).thenThrow(IOException.class);		
 	}
 	
 	private void mockUriBreedImages(String breedName, APISuccess sucessTest) {

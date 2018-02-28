@@ -16,14 +16,14 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import demo.dogapi.ControllerTestBase;
+import demo.dogapi.MockTestBase;
 import demo.dogapi.TestingException;
 import demo.dogapi.domain.Breed;
 import demo.dogapi.error.NotFoundException;
 import demo.dogapi.service.IRestService;
 
 
-public class GETControllerTest extends ControllerTestBase {
+public class GETControllerTest extends MockTestBase {
 
 	private String endpoint = "/v1/breed/";
 
@@ -35,14 +35,14 @@ public class GETControllerTest extends ControllerTestBase {
 
 	@Before
 	public void setUp() throws TestingException {
-		super.setControllerList(restController);
+		super.setMockList(restController);
 		super.setUp();
 	}
 
 	@Test
 	public void getTest_status_200() throws TestingException {
 		try {
-			String breed = "chiguagua";
+			String breed = "terrier";
 
 			when(service.getDataByBreed(any(String.class))).thenReturn(new Breed());
 
@@ -65,7 +65,7 @@ public class GETControllerTest extends ControllerTestBase {
 	@Test
 	public void getTest_status_404() throws TestingException {
 		try {
-			String breed = "chiguagua";
+			String breed = "quiltro";
 
 			when(service.getDataByBreed(any(String.class))).thenThrow(new NotFoundException("no existe"));
 

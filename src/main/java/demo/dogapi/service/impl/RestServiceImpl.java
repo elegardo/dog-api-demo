@@ -5,13 +5,11 @@ import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
@@ -31,16 +29,9 @@ import demo.dogapi.service.IRestService;
 @Service
 public class RestServiceImpl implements IRestService {
 	
-	@Value("${api.timeout}")
-	private int apiTimeout;
-	
-	private final RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
 
-    public RestServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-        setTimeout(restTemplate);
-    }
-    
     @Override
 	public Breed getDataByBreed(String breed) {
 		
@@ -99,11 +90,4 @@ public class RestServiceImpl implements IRestService {
         return images;    	
     }
     
-    private void setTimeout(RestTemplate restTemplate) {
-        restTemplate.setRequestFactory(new SimpleClientHttpRequestFactory());
-        SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(this.apiTimeout);
-        rf.setConnectTimeout(this.apiTimeout);
-    }
-
 }

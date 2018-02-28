@@ -9,21 +9,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore
-public class ControllerTestBase {
+public class MockTestBase {
     
     protected MockMvc mockMvc;
-    protected Object[] controllerList;
+    protected Object[] mockList;
 
     @Before
     public void setUp() throws TestingException {
-        mockMvc = MockMvcBuilders.standaloneSetup(getControllerList()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(getMockList()).build();
     }
 
-    protected Object[] getControllerList() {
-        return controllerList;
+    protected Object[] getMockList() {
+        return mockList;
     }
 
-    protected void setControllerList(Object... controllers) {
-        this.controllerList = controllers;
+    protected void setMockList(Object... objectList) {
+        this.mockList = objectList;
     }
 }

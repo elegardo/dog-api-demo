@@ -12,15 +12,13 @@ import demo.dogapi.error.ExceptionController;
 @RunWith(MockitoJUnitRunner.class)
 @Ignore
 public class MockTestBase {
-    
+
     protected MockMvc mockMvc;
     protected Object[] mockList;
 
     @Before
     public void setUp() throws TestingException {
-        mockMvc = MockMvcBuilders.standaloneSetup(getMockList())
-        							.setControllerAdvice(new ExceptionController())
-        							.build();
+        mockMvc = MockMvcBuilders.standaloneSetup(getMockList()).setControllerAdvice(new ExceptionController()).build();
     }
 
     protected Object[] getMockList() {

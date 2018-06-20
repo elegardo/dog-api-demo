@@ -25,20 +25,20 @@ public class LogServiceAspect {
         } finally {
             sw.stop();
             LOGGER.info("timelapsed:" + sw.getTotalTimeMillis() + "(ms), " 
-                    + "breed:"+request + ", " 
-                    + " - "+ pjp.getTarget().getClass().getSimpleName() + "." + pjp.getSignature().getName() + "(..)");
-            
+                        + "breed:" + request + ", " + " - "
+                        + pjp.getTarget().getClass().getSimpleName() + "." + pjp.getSignature().getName() + "(..)");
+
             LOGGER.debug("timelapsed:" + sw.getTotalTimeMillis() + "(ms), " 
-                    + "breed:"+request + ", " 
-                    + " - "+ pjp.getSignature().getName() + "(..))");
+                        + "breed:" + request + ", " + " - "
+                        + pjp.getSignature().getName() + "(..))");
         }
     }
-    
+
     @AfterThrowing(pointcut = "execution(* demo.dogapi.service.impl..*(..))", throwing = "error")
     public void exceptionLogger(JoinPoint jointPoint, Throwable error) {
-        LOGGER.error(jointPoint.getSignature().getName() + "(..)"
+        LOGGER.error(jointPoint.getSignature().getName() + "(..)" 
                     + ", Type:" + error.getClass().getSimpleName()
                     + ", Message: " + error.getMessage());
     }
-    
+
 }

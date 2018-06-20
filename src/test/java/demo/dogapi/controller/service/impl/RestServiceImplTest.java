@@ -29,186 +29,170 @@ import demo.dogapi.error.ServiceException;
 import demo.dogapi.service.impl.RestServiceImpl;
 
 public class RestServiceImplTest extends MockTestBase {
-	
-	private final String endpoint = "https://dog.ceo/api/breed/";
-	
-	@InjectMocks
-	private RestServiceImpl restService = new RestServiceImpl();
 
-	@Mock
-	private RestTemplate restTemplate;
-	
-	@Before
-	public void setUp() throws TestingException {
-		super.setMockList(restService);
-		super.setUp();
-	}
+    private final String endpoint = "https://dog.ceo/api/breed/";
 
-	@Test
-	public void getTest_service_sucessWithoutImages() throws TestingException {
-		try {
+    @InjectMocks
+    private RestServiceImpl restService = new RestServiceImpl();
 
-			String breedName = "pitbull";
-			
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreed(breedName);
-		    
-		    APISuccess sucessTest = new APISuccess();
-		    sucessTest.setMessage(new ArrayList<String>());
-		    
-		    mockUriBreedImages(breedName, sucessTest);
-		    
-	        Breed returnBreed = restService.getDataByBreed(breedName);
-	        
-	        assertEquals(myBreed.getBreed(), returnBreed.getBreed());
-	        assertEquals(sucessTest.getStatus(), "success");
+    @Mock
+    private RestTemplate restTemplate;
 
-		} catch (Exception e) {
-			throw new TestingException(e.getMessage(), e);
-		}
-	}
-	
-	@Test
-	public void getTest_service_sucessWithImages() throws TestingException {
-		try {
+    @Before
+    public void setUp() throws TestingException {
+        super.setMockList(restService);
+        super.setUp();
+    }
 
-			String breedName = "pitbull";
-			
-			Breed myBreed = new Breed();
-			BreedImage myImage = new BreedImage("https://");
-			myBreed.setBreed(breedName);
-			myBreed.setImages(new ArrayList<BreedImage>());
-			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image1.jpg"));
-			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image2.jpg"));
-			myBreed.getImages().add(new BreedImage(myImage.getUrl()+"image3.jpg"));
-			
-			mockUriBreed(breedName);
-		    
-		    APISuccess sucessTest = new APISuccess();
-		    sucessTest.setMessage(new ArrayList<String>());
-		    sucessTest.getMessage().add("https://image1.jpg");
-		    sucessTest.getMessage().add("https://image2.jpg");
-		    sucessTest.getMessage().add("https://image3.jpg");
-		    
-		    mockUriBreedImages(breedName, sucessTest);
-		    
-	        Breed returnBreed = restService.getDataByBreed(breedName);
-	        
-	        assertEquals(myBreed.getBreed(), returnBreed.getBreed());
-	        assertEquals(myBreed.getImages().size(), returnBreed.getImages().size());
+    @Test
+    public void getTest_service_sucessWithoutImages() throws TestingException {
+        try {
 
-		} catch (Exception e) {
-			throw new TestingException(e.getMessage(), e);
-		}
-	}
-	
-	@Test(expected=ServiceException.class)
-	public void getTest_service_errorTimeout() {
+            String breedName = "pitbull";
 
-			String breedName = "pitbull";			
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreedErrorTimeout(breedName);
-		    
-			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
-	}
-	
-	@Test(expected=NotFoundException.class)
-	public void getTest_service_error404() {
+            Breed myBreed = new Breed();
+            myBreed.setBreed(breedName);
 
-			String breedName = "quiltro";
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreedErrorByCode(breedName, "404", HttpStatus.OK);
-		    
-			when(restService.getDataByBreed(breedName)).thenThrow(new NotFoundException("no esta"));
-	}
-	
-	@Test(expected=ServiceException.class)
-	public void getTest_service_errorGeneric() {
+            mockUriBreed(breedName);
 
-			String breedName = "quiltro";
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreedErrorByCode(breedName, "500", HttpStatus.OK);
-		    
-			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
-	}
-	
-	@Test(expected=ServiceException.class)
-	public void getTest_service_errorDefault() {
+            APISuccess sucessTest = new APISuccess();
+            sucessTest.setMessage(new ArrayList<String>());
 
-			String breedName = "quiltro";
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreedErrorByCode(breedName, "0", HttpStatus.INTERNAL_SERVER_ERROR);
-		    
-			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
-	}	
+            mockUriBreedImages(breedName, sucessTest);
 
-	@Test(expected=ServiceException.class)
-	public void getTest_service_errorConnection() {
+            Breed returnBreed = restService.getDataByBreed(breedName);
 
-			String breedName = "pitbull";			
-			Breed myBreed = new Breed();
-			myBreed.setBreed(breedName);
-			
-			mockUriBreedErrorConnection(breedName);
-		    
-			when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
-	}
-	
-	private void mockUriBreed(String breedName) {
-		ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"success\",\"message\":[]}", HttpStatus.OK);
-	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq(endpoint+breedName+"/list"),
-	    		Matchers.eq(HttpMethod.GET),
-	    		Matchers.<HttpEntity<Void>>any(),
-	    		Matchers.<Class<String>>any())
-	    	).thenReturn(uriBreedTest);		
-	}
-	
-	private void mockUriBreedErrorByCode(String breedName, String code, HttpStatus status) {
-		ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"error\",\"code\":\""+code+"\",\"message\":\"Error text\"}", status);
-	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq(endpoint+breedName+"/list"),
-	    		Matchers.eq(HttpMethod.GET),
-	    		Matchers.<HttpEntity<Void>>any(),
-	    		Matchers.<Class<String>>any())
-	    	).thenReturn(uriBreedTest);		
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void mockUriBreedErrorTimeout(String breedName) {
-	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq(endpoint+breedName+"/list"),
-	    		Matchers.eq(HttpMethod.GET),
-	    		Matchers.<HttpEntity<Void>>any(),
-	    		Matchers.<Class<String>>any())
-	    	).thenThrow(ConnectException.class);
-	}
-	
-	@SuppressWarnings("unchecked")
-	private void mockUriBreedErrorConnection(String breedName) {
-	    Mockito.when(restTemplate.exchange(
-	    		Matchers.eq(endpoint+breedName+"/list"),
-	    		Matchers.eq(HttpMethod.GET),
-	    		Matchers.<HttpEntity<Void>>any(),
-	    		Matchers.<Class<String>>any())
-	    	).thenThrow(IOException.class);		
-	}
-	
-	private void mockUriBreedImages(String breedName, APISuccess sucessTest) {
-	    Mockito.when(restTemplate.getForObject(
-	    		Matchers.eq(endpoint+breedName+"/images"),
-	    		Matchers.<Class<APISuccess>>any())
-	    	).thenReturn(sucessTest);		
-	}
-	
+            assertEquals(myBreed.getBreed(), returnBreed.getBreed());
+            assertEquals(sucessTest.getStatus(), "success");
+
+        } catch (Exception e) {
+            throw new TestingException(e.getMessage(), e);
+        }
+    }
+
+    @Test
+    public void getTest_service_sucessWithImages() throws TestingException {
+        try {
+
+            String breedName = "pitbull";
+
+            Breed myBreed = new Breed();
+            BreedImage myImage = new BreedImage("https://");
+            myBreed.setBreed(breedName);
+            myBreed.setImages(new ArrayList<BreedImage>());
+            myBreed.getImages().add(new BreedImage(myImage.getUrl() + "image1.jpg"));
+            myBreed.getImages().add(new BreedImage(myImage.getUrl() + "image2.jpg"));
+            myBreed.getImages().add(new BreedImage(myImage.getUrl() + "image3.jpg"));
+
+            mockUriBreed(breedName);
+
+            APISuccess sucessTest = new APISuccess();
+            sucessTest.setMessage(new ArrayList<String>());
+            sucessTest.getMessage().add("https://image1.jpg");
+            sucessTest.getMessage().add("https://image2.jpg");
+            sucessTest.getMessage().add("https://image3.jpg");
+
+            mockUriBreedImages(breedName, sucessTest);
+
+            Breed returnBreed = restService.getDataByBreed(breedName);
+
+            assertEquals(myBreed.getBreed(), returnBreed.getBreed());
+            assertEquals(myBreed.getImages().size(), returnBreed.getImages().size());
+
+        } catch (Exception e) {
+            throw new TestingException(e.getMessage(), e);
+        }
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getTest_service_errorTimeout() {
+
+        String breedName = "pitbull";
+        Breed myBreed = new Breed();
+        myBreed.setBreed(breedName);
+
+        mockUriBreedErrorTimeout(breedName);
+
+        when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getTest_service_error404() {
+
+        String breedName = "quiltro";
+        Breed myBreed = new Breed();
+        myBreed.setBreed(breedName);
+
+        mockUriBreedErrorByCode(breedName, "404", HttpStatus.OK);
+
+        when(restService.getDataByBreed(breedName)).thenThrow(new NotFoundException("no esta"));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getTest_service_errorGeneric() {
+
+        String breedName = "quiltro";
+        Breed myBreed = new Breed();
+        myBreed.setBreed(breedName);
+
+        mockUriBreedErrorByCode(breedName, "500", HttpStatus.OK);
+
+        when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getTest_service_errorDefault() {
+
+        String breedName = "quiltro";
+        Breed myBreed = new Breed();
+        myBreed.setBreed(breedName);
+
+        mockUriBreedErrorByCode(breedName, "0", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("internal error"));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getTest_service_errorConnection() {
+
+        String breedName = "pitbull";
+        Breed myBreed = new Breed();
+        myBreed.setBreed(breedName);
+
+        mockUriBreedErrorConnection(breedName);
+
+        when(restService.getDataByBreed(breedName)).thenThrow(new ServiceException("error"));
+    }
+
+    private void mockUriBreed(String breedName) {
+        ResponseEntity<String> uriBreedTest = new ResponseEntity<String>("{\"status\":\"success\",\"message\":[]}",
+                HttpStatus.OK);
+        Mockito.when(restTemplate.exchange(Matchers.eq(endpoint + breedName + "/list"), Matchers.eq(HttpMethod.GET),
+                Matchers.<HttpEntity<Void>>any(), Matchers.<Class<String>>any())).thenReturn(uriBreedTest);
+    }
+
+    private void mockUriBreedErrorByCode(String breedName, String code, HttpStatus status) {
+        ResponseEntity<String> uriBreedTest = new ResponseEntity<String>(
+                "{\"status\":\"error\",\"code\":\"" + code + "\",\"message\":\"Error text\"}", status);
+        Mockito.when(restTemplate.exchange(Matchers.eq(endpoint + breedName + "/list"), Matchers.eq(HttpMethod.GET),
+                Matchers.<HttpEntity<Void>>any(), Matchers.<Class<String>>any())).thenReturn(uriBreedTest);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void mockUriBreedErrorTimeout(String breedName) {
+        Mockito.when(restTemplate.exchange(Matchers.eq(endpoint + breedName + "/list"), Matchers.eq(HttpMethod.GET),
+                Matchers.<HttpEntity<Void>>any(), Matchers.<Class<String>>any())).thenThrow(ConnectException.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void mockUriBreedErrorConnection(String breedName) {
+        Mockito.when(restTemplate.exchange(Matchers.eq(endpoint + breedName + "/list"), Matchers.eq(HttpMethod.GET),
+                Matchers.<HttpEntity<Void>>any(), Matchers.<Class<String>>any())).thenThrow(IOException.class);
+    }
+
+    private void mockUriBreedImages(String breedName, APISuccess sucessTest) {
+        Mockito.when(restTemplate.getForObject(Matchers.eq(endpoint + breedName + "/images"),
+                Matchers.<Class<APISuccess>>any())).thenReturn(sucessTest);
+    }
+
 }

@@ -8,17 +8,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class ExceptionController {
-	
-	@ExceptionHandler(ServiceException.class)
-	@ResponseBody
-	public ResponseEntity<ResponseError> handleException(ServiceException e) {
-		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	@ExceptionHandler(NotFoundException.class)
-	@ResponseBody
-	public ResponseEntity<ResponseError> handleException(NotFoundException e) {
-		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
-	}
-	
+
+    @ExceptionHandler(ServiceException.class)
+    @ResponseBody
+    public ResponseEntity<ResponseError> handleException(ServiceException e) {
+        return new ResponseEntity<ResponseError>(
+                new ResponseError(HttpStatus.INTERNAL_SERVER_ERROR.value()
+                                    ,e.getMessage())
+                                    ,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<ResponseError> handleException(NotFoundException e) {
+        return new ResponseEntity<ResponseError>(
+                new ResponseError(HttpStatus.NOT_FOUND.value()
+                                    ,e.getMessage())
+                                    ,HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -20,19 +20,18 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/v1/breed/{breed}")
 public class GETController {
-	
-	@Autowired
-	private IRestService service;
 
-	@RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(httpMethod = "GET", value = "get")
-	@ApiResponses(value = {
-			@ApiResponse(code = 404, message = "Not Found", 				response = ResponseError.class),
-			@ApiResponse(code = 500, message = "Internal Server Error", 	response = ResponseError.class)
-			}
-	)
-	public ResponseEntity<Breed> get(@PathVariable String breed) {
-		return new ResponseEntity<Breed>(this.service.getDataByBreed(breed), HttpStatus.OK);	
-	}
-	
+    @Autowired
+    private IRestService service;
+
+    @RequestMapping(method = GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(httpMethod = "GET", value = "get")
+    @ApiResponses(value = { 
+            @ApiResponse(code = 404, message = "Not Found", response = ResponseError.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ResponseError.class)
+            })
+    public ResponseEntity<Breed> get(@PathVariable String breed) {
+        return new ResponseEntity<Breed>(this.service.getDataByBreed(breed), HttpStatus.OK);
+    }
+
 }

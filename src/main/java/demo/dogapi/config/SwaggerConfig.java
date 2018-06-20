@@ -17,20 +17,20 @@ public class SwaggerConfig {
 
     @Bean
     public Docket newsApi() {
-        
+
         return new Docket(DocumentationType.SWAGGER_2)
-        		.apiInfo(apiInfo())
-        		.useDefaultResponseMessages(false)
-                .select()
-                .paths(regex("/v1/.*"))
-                .build();
+                    .apiInfo(apiInfo())
+                    .useDefaultResponseMessages(false)
+                    .select()
+                    .paths(regex("/v1/.*"))
+                    .build();
     }
-    
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Dog API Demo")
-                .version("1.0")
-                .build();
+                    .title("Dog API Demo")
+                    .version("1.0")
+                    .build();
     }
 
 }

@@ -1,4 +1,4 @@
-package demo.dogapi.error;
+package cl.elegardo.dogapi.error;
 
 public class ResponseError {
 

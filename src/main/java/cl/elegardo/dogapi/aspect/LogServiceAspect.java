@@ -1,4 +1,4 @@
-package demo.dogapi.aspect;
+package cl.elegardo.dogapi.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

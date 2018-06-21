@@ -18,12 +18,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import demo.dogapi.api.APIError;
-import demo.dogapi.api.APISuccess;
-import demo.dogapi.domain.Breed;
-import demo.dogapi.domain.BreedImage;
-import demo.dogapi.error.NotFoundException;
-import demo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.api.APIError;
+import cl.elegardo.dogapi.api.APISuccess;
+import cl.elegardo.dogapi.domain.Breed;
+import cl.elegardo.dogapi.domain.BreedImage;
+import cl.elegardo.dogapi.error.NotFoundException;
+import cl.elegardo.dogapi.error.ServiceException;
 import demo.dogapi.service.IRestService;
 
 @Service

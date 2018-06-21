@@ -1,6 +1,6 @@
 package demo.dogapi.service;
 
-import demo.dogapi.domain.Breed;
+import cl.elegardo.dogapi.domain.Breed;
 
 public interface IRestService {
 

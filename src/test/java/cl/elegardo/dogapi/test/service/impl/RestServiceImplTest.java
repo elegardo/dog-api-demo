@@ -1,4 +1,4 @@
-package demo.dogapi.controller.service.impl;
+package cl.elegardo.dogapi.test.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -19,13 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import demo.dogapi.MockTestBase;
-import demo.dogapi.TestingException;
-import demo.dogapi.api.APISuccess;
-import demo.dogapi.domain.Breed;
-import demo.dogapi.domain.BreedImage;
-import demo.dogapi.error.NotFoundException;
-import demo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.api.APISuccess;
+import cl.elegardo.dogapi.domain.Breed;
+import cl.elegardo.dogapi.domain.BreedImage;
+import cl.elegardo.dogapi.error.NotFoundException;
+import cl.elegardo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.test.MockTestBase;
+import cl.elegardo.dogapi.test.TestingException;
 import demo.dogapi.service.impl.RestServiceImpl;
 
 public class RestServiceImplTest extends MockTestBase {

@@ -1,4 +1,4 @@
-package demo.dogapi.api;
+package cl.elegardo.dogapi.api;
 
 public class APIError extends APIResult {
 

@@ -1,4 +1,4 @@
-package demo.dogapi;
+package cl.elegardo.dogapi.test;
 
 public class TestingException extends Exception {
 

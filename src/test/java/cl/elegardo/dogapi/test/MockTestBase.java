@@ -1,4 +1,4 @@
-package demo.dogapi;
+package cl.elegardo.dogapi.test;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import demo.dogapi.error.ExceptionController;
+import cl.elegardo.dogapi.error.ExceptionController;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore

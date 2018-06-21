@@ -1,4 +1,4 @@
-package demo.dogapi.controller;
+package cl.elegardo.dogapi.test.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -19,12 +19,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import demo.dogapi.MockTestBase;
-import demo.dogapi.TestingException;
-import demo.dogapi.domain.Breed;
-import demo.dogapi.error.NotFoundException;
-import demo.dogapi.error.ResponseError;
-import demo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.controller.GETController;
+import cl.elegardo.dogapi.domain.Breed;
+import cl.elegardo.dogapi.error.NotFoundException;
+import cl.elegardo.dogapi.error.ResponseError;
+import cl.elegardo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.test.MockTestBase;
+import cl.elegardo.dogapi.test.TestingException;
 import demo.dogapi.service.IRestService;
 
 public class GETControllerTest extends MockTestBase {

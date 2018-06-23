@@ -1,4 +1,4 @@
-package demo.dogapi.service;
+package cl.elegardo.dogapi.service;
 
 import cl.elegardo.dogapi.domain.Breed;
 

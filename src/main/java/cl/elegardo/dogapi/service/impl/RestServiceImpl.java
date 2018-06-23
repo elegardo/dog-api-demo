@@ -1,4 +1,4 @@
-package demo.dogapi.service.impl;
+package cl.elegardo.dogapi.service.impl;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -24,7 +24,7 @@ import cl.elegardo.dogapi.domain.Breed;
 import cl.elegardo.dogapi.domain.BreedImage;
 import cl.elegardo.dogapi.error.NotFoundException;
 import cl.elegardo.dogapi.error.ServiceException;
-import demo.dogapi.service.IRestService;
+import cl.elegardo.dogapi.service.IRestService;
 
 @Service
 public class RestServiceImpl implements IRestService {

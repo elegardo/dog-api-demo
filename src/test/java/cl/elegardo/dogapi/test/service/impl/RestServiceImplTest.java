@@ -24,9 +24,9 @@ import cl.elegardo.dogapi.domain.Breed;
 import cl.elegardo.dogapi.domain.BreedImage;
 import cl.elegardo.dogapi.error.NotFoundException;
 import cl.elegardo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.service.impl.RestServiceImpl;
 import cl.elegardo.dogapi.test.MockTestBase;
 import cl.elegardo.dogapi.test.TestingException;
-import demo.dogapi.service.impl.RestServiceImpl;
 
 public class RestServiceImplTest extends MockTestBase {
 

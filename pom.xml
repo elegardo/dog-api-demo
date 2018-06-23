@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cl.elegardo</groupId>
-	<artifactId>dog-api</artifactId>
+	<artifactId>dog-api-demo</artifactId>
 	<version>v0.1</version>
 	<packaging>jar</packaging>
 
-	<name>dog-api</name>
+	<name>dog-api-demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

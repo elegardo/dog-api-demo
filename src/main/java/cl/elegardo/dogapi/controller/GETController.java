@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.elegardo.dogapi.domain.Breed;
 import cl.elegardo.dogapi.error.ResponseError;
-import demo.dogapi.service.IRestService;
+import cl.elegardo.dogapi.service.IRestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

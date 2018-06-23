@@ -24,9 +24,9 @@ import cl.elegardo.dogapi.domain.Breed;
 import cl.elegardo.dogapi.error.NotFoundException;
 import cl.elegardo.dogapi.error.ResponseError;
 import cl.elegardo.dogapi.error.ServiceException;
+import cl.elegardo.dogapi.service.IRestService;
 import cl.elegardo.dogapi.test.MockTestBase;
 import cl.elegardo.dogapi.test.TestingException;
-import demo.dogapi.service.IRestService;
 
 public class GETControllerTest extends MockTestBase {
 

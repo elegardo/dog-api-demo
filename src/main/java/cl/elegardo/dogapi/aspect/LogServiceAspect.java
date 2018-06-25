@@ -16,7 +16,7 @@ public class LogServiceAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogServiceAspect.class);
 
-    @Around("execution(* demo.dogapi.service.impl..*(..)) && args(request)")
+    @Around("execution(* cl.elegardo.dogapi.service.impl..*(..)) && args(request)")
     public Object log1(ProceedingJoinPoint pjp, String request) throws Throwable {
         StopWatch sw = new StopWatch();
         try {
@@ -34,7 +34,7 @@ public class LogServiceAspect {
         }
     }
 
-    @AfterThrowing(pointcut = "execution(* demo.dogapi.service.impl..*(..))", throwing = "error")
+    @AfterThrowing(pointcut = "execution(* cl.elegardo.dogapi.service.impl..*(..))", throwing = "error")
     public void exceptionLogger(JoinPoint jointPoint, Throwable error) {
         LOGGER.error(jointPoint.getSignature().getName() + "(..)" 
                     + ", Type:" + error.getClass().getSimpleName()

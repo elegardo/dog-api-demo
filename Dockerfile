@@ -1,4 +1,4 @@
-FROM elegardo/java-10:v0.1
+FROM openjdk:10-jre-slim
 
 ADD maven/*.jar /app.jar
 

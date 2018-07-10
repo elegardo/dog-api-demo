@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.error;
+package demo.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

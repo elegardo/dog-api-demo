@@ -19,14 +19,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import cl.elegardo.dogapi.api.APISuccess;
-import cl.elegardo.dogapi.domain.Breed;
-import cl.elegardo.dogapi.domain.BreedImage;
-import cl.elegardo.dogapi.error.NotFoundException;
-import cl.elegardo.dogapi.error.ServiceException;
-import cl.elegardo.dogapi.service.impl.RestServiceImpl;
 import cl.elegardo.dogapi.test.MockTestBase;
 import cl.elegardo.dogapi.test.TestingException;
+import demo.api.APISuccess;
+import demo.domain.Breed;
+import demo.domain.BreedImage;
+import demo.error.NotFoundException;
+import demo.error.ServiceException;
+import demo.service.impl.RestServiceImpl;
 
 public class RestServiceImplTest extends MockTestBase {
 

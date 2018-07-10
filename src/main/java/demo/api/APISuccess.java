@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.api;
+package demo.api;
 
 import java.util.List;
 

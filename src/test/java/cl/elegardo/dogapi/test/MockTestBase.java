@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import cl.elegardo.dogapi.error.ExceptionController;
+import demo.error.ExceptionController;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore

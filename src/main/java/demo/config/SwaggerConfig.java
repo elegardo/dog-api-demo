@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.config;
+package demo.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 

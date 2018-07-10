@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi;
+package demo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.controller;
+package demo.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.elegardo.dogapi.domain.Breed;
-import cl.elegardo.dogapi.error.ResponseError;
-import cl.elegardo.dogapi.service.IRestService;
+import demo.domain.Breed;
+import demo.error.ResponseError;
+import demo.service.IRestService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.aspect;
+package demo.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,7 +16,7 @@ public class LogServiceAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogServiceAspect.class);
 
-    @Around("execution(* cl.elegardo.dogapi.service.impl..*(..)) && args(request)")
+    @Around("execution(* demo.service.impl..*(..)) && args(request)")
     public Object log1(ProceedingJoinPoint pjp, String request) throws Throwable {
         StopWatch sw = new StopWatch();
         try {
@@ -34,7 +34,7 @@ public class LogServiceAspect {
         }
     }
 
-    @AfterThrowing(pointcut = "execution(* cl.elegardo.dogapi.service.impl..*(..))", throwing = "error")
+    @AfterThrowing(pointcut = "execution(* demo.service.impl..*(..))", throwing = "error")
     public void exceptionLogger(JoinPoint jointPoint, Throwable error) {
         LOGGER.error(jointPoint.getSignature().getName() + "(..)" 
                     + ", Type:" + error.getClass().getSimpleName()

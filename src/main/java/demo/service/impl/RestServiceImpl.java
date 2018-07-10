@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.service.impl;
+package demo.service.impl;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -18,13 +18,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cl.elegardo.dogapi.api.APIError;
-import cl.elegardo.dogapi.api.APISuccess;
-import cl.elegardo.dogapi.domain.Breed;
-import cl.elegardo.dogapi.domain.BreedImage;
-import cl.elegardo.dogapi.error.NotFoundException;
-import cl.elegardo.dogapi.error.ServiceException;
-import cl.elegardo.dogapi.service.IRestService;
+import demo.api.APIError;
+import demo.api.APISuccess;
+import demo.domain.Breed;
+import demo.domain.BreedImage;
+import demo.error.NotFoundException;
+import demo.error.ServiceException;
+import demo.service.IRestService;
 
 @Service
 public class RestServiceImpl implements IRestService {

@@ -1,4 +1,4 @@
-package cl.elegardo.dogapi.domain;
+package demo.domain;
 
 import io.swagger.annotations.ApiModel;
 
